@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <!-- Menu -->
+    <record id="build_products_action" model="ir.actions.act_window">
+        <field name="name">Build products</field>
+        <field name="res_model">build.products</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="buildproducts_menu_root" name="Build Products"/>
+    <menuitem id="buildproducts_first_level_menu" name="Products" parent="buildproducts_menu_root"/>
+    <menuitem id="build_products_menu_action" action="build_products_action" parent="buildproducts_first_level_menu"/>
+
+    <!-- List View -->
+     <record id="view_products_list" model="ir.ui.view">
+        <field name="name">build.products.list</field>
+        <field name="model">build.products</field>
+        <field name="arch" type="xml">
+            <tree decoration-success="product_quantity &gt;0" decoration-danger="product_quantity &lt;0">
+                <field name="name"/>
+                <field name="product_type"/>
+                <field name="product_grade"/>
+                <field name="product_price"/>
+                <field name="product_quantity"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_product_form" model="ir.ui.view">
+        <field name="name">build.products.form</field>
+        <field name="model">build.products</field>
+        <field name="arch" type="xml">
+            <form string="Build Product">
+                <header>
+                    <button name="action_opc" type="object" string="OPC"/>
+                    <button name="action_ppc" type="object" string="PPC"/>
+                </header>
+                <sheet>
+                    <h1><field name="name" placeholder="Enter Product name"/></h1>
+                    <div style="height: 15px"/>
+                    <field name="tag_ids" widget="many2many_tags" placeholder="Tags" options="{'color_field': 'color'}"/>
+                    <div style="height: 15px"/>
+                    <group>
+                        <group>
+                            <field name="product_price"/>
+                            <field name="total_sale"/>
+                        </group>
+                        <group>
+                            <field name="product_type"/>
+                            <field name="product_grade"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <group>
+                                <field name="description"/>
+                                <field name="product_quantity"/>
+                            </group>
+                        </page>
+                        <page string="Orders">
+                            <field name="order_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_products_search" model="ir.ui.view">
+        <field name="name">build.products.search</field>
+        <field name="model">build.products</field>
+        <field name="arch" type="xml">
+            <search string="Search Products">
+                <field name="name" string="Name"/>
+                <field name="product_type" string="Product Type"/>
+                <field name="product_grade" string="Product Grade"/>
+                <!-- Group By -->
+                <filter name="product_type" context="{'group_by': 'product_type'}"/>
+                <separator/>
+                <filter name="product_grade" context="{'group_by': 'product_grade'}"/>
+            </search> 
+        </field>
+    </record>
+
+</odoo>

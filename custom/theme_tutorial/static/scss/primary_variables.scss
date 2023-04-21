@@ -1,0 +1,27 @@
+// $o-website-values-palettes: (
+//     (
+//         'color-palettes-name':              'xyz',
+//     ),
+// );
+
+// $o-color-palettes: map-merge($o-color-palettes,
+//     (
+//         'xyz': (
+            
+//                 'o-color-1': #48d13c,
+//                 'o-color-2': #5307e0,
+//                 'o-color-3': #548fc7,
+//                 'o-color-4': #969397,
+//                 'o-color-5': #422335,
+//             ),
+//         'xyz2': (
+//                 'o-color-1': #15d2eb,
+//                 'o-color-2': #e62b13,
+//                 'o-color-3': #f5700b,
+//                 'o-color-4': #C6CCA5,
+//                 'o-color-5': #c311c9,
+//             ),
+//     )
+// );
+// $o-selected-color-palettes-names: append($o-selected-color-palettes-names, 'xyz');
+// $o-selected-color-palettes-names: append($o-selected-color-palettes-names, 'xyz2');

@@ -1,0 +1,147 @@
+<odoo>
+
+    <template id="index">
+        <t t-call="website.layout">
+            <t t-set="title">Properties</t>
+            <form class="mt-4 d-flex mx-4 pb-4" method="GET">
+                <input type="date" id="filterDate" name="search" class="form-control"
+                    style="width: 150px;" />
+                <input type="submit" value="Listed After" class="btn btn-primary ms-2" />
+            </form>
+            <div class="oe_structure">
+                <div class="container border">
+                    <t t-if="properties">
+                        <div class="row m-4">
+                            <t t-foreach="properties" t-as="property">
+                                <div class="col-lg-4 col-md-6 mb-5">
+                                    <div class="card" style="width: 18rem;">
+                                        <img class="card-img-top"
+                                            t-att-src="image_data_uri(property.image)"
+                                            alt="Property"></img>
+                                        <div class="card-body">
+                                            <a t-attf-href="/{{ slug(property) }}">
+                                                <t class="card-title" t-esc="property.name" />
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                    </t>
+                    <t t-else="">
+                        <p>
+                            <h2>No properties available !</h2>
+                        </p>
+                    </t>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center m-4">
+                <t t-call="website.pager" />
+            </div>
+        </t>
+    </template>
+
+    <template id="details">
+        <t t-call="website.layout">
+            <t t-set="title">Property</t>
+            <div class="oe_structure" />
+            <div class="oe_structure">
+                <div class="container mb-5">
+                    <div class="row m-2">
+                        <div class="col-6">
+                            <img alt="Property" class="img-thumbnail w-100 h-100"
+                                t-att-src="image_data_uri(property.image)" style="width: 12rem" />
+                        </div>
+                        <div class="col-6">
+                            <h2 t-field="property.name" />
+                            <hr />
+                            <br />
+                            <b> Postcode: </b>
+                            <span t-field="property.postcode" />
+                            <hr />
+                            <b> Expected Price: </b>
+                            <span t-field="property.expected_price" />
+                            <hr />
+                            <b> Date Of Availability: </b>
+                            <span t-field="property.date_availability" />
+                            <hr />
+                            <b> Bedrooms: </b>
+                            <span t-field="property.bedrooms" />
+                            <hr />
+                            <b> Best Offer: </b>
+                            <span t-field="property.best_price" />
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center m-4">
+                        <a t-attf-href="/offers/{{slug(property)}}" class="btn btn-info "> See
+                            Offers </a>
+                        <!-- <a t-attf-href="/make_offer/{{slug(property)}}" class="btn btn-success">Make
+                            Offer</a> -->
+                    </div>
+                </div>
+            </div>
+            <div class="oe_structure" />
+        </t>
+    </template>
+
+    <template id="property_offers">
+        <t t-call="website.layout">
+            <h4 align="center" class="m-4">Offers</h4>
+            <div class="container p-5 pt-1">
+                <t t-if="offers">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Partner</th>
+                                <th scope="col">Property</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">deadline</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="offers" t-as="offer">
+                                <tr>
+                                    <td>
+                                        <p t-field="offer.partner_id" />
+                                    </td>
+                                    <td>
+                                        <p t-field="offer.property_id" />
+                                    </td>
+                                    <td>
+                                        <p t-field="offer.price" />
+                                    </td>
+                                    <td>
+                                        <p t-field="offer.validity" />
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+                <t t-else="">
+                    <b>No Offers Available!</b>
+                </t>
+            </div>
+        </t>
+    </template>
+
+    <!-- <template id="offer_form">
+        <form class="mt-4 d-flex mx-4 pb-4" method="POST">
+            <input type="hidden" name="property_id" t-att-value="property.id" />
+            <div class="mb-3">
+                <label for="partner_name" class="form-label">Partner Name</label>
+                <input type="text" class="form-control" id="partner_name" name="partner_name"/>
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input type="number" class="form-control" id="price" name="price" />
+            </div>
+            <div class="mb-3">
+                <label for="validity" class="form-label">Validity</label>
+                <input type="date" class="form-control" id="validity" name="validity" />
+            </div>
+            <input type="submit" value="Make Offer" class="btn btn-primary ms-2" />
+        </form>
+    </template> -->
+
+</odoo>

@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <!-- Tree View For Orders -->
+    <record model="ir.ui.view" id="build_products_order_tree_view">
+        <field name="name">build.products.order.list</field>
+        <field name="model">build.products.order</field>
+        <field name="arch" type="xml">
+            <tree decoration-success="state=='delivered'" decoration-danger="state=='canceled'">
+                <field name="buyer_id"/>
+                <field name="qty_ordered"/>
+                <field name="total_amount"/>
+                <field name="state" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+     <!-- Form View For Orders -->
+    <record model="ir.ui.view" id="build_products_order_form_view">
+        <field name="name">build.products.order.form</field>
+        <field name="model">build.products.order</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_canceled" type="object" string="Canceled" states="new,in_progress,in_delivery"/>
+                    <button name="action_delivered" type="object" string="Delivered" states="new,in_progress,in_delivery"/>
+                    <field name="state" widget="statusbar" statusbar_visible="new,in_progress,in_delivery,delivered"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="buyer_id" attrs="{'readonly': [('state', 'in', ['delivered', 'canceled'])]}"/>
+                            <field name="qty_ordered" attrs="{'readonly': [('state', 'in', ['delivered', 'canceled'])]}"/>
+                            <field name="total_amount" attrs="{'readonly': [('state', 'in', ['delivered', 'canceled'])]}"/>
+                        </group>
+                        <group>
+                            <field name="order_date" attrs="{'readonly': [('state', 'in', ['delivered', 'canceled'])]}"/>
+                            <field name="delivery_date" attrs="{'readonly': [('state', 'in', ['delivered', 'canceled'])]}"/>
+                            <!-- <field name="state"/> -->
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Delivery Address">
+                            <field name="delivery_address" attrs="{'readonly': [('state', 'in', ['delivered', 'canceled'])]}"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>
